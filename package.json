@@ -1,0 +1,84 @@
+{
+  "name": "music_player",
+  "version": "1.0.0",
+  "description": "a simple music player!",
+  "main": "main.js",
+  "scripts": {
+    "dev": "electron .",
+    "pack": "electron-builder --win --x64",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "build": {
+    "productName": "music player",
+    "appId": "com.z.mp",
+    "copyright": "@author z",
+    "files": [
+      "./src/**/*",
+      "./package.json",
+      "./package-lock.json"
+    ],
+    "directories": {
+      "output": "build"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "",
+      "uninstallerIcon": "",
+      "installerHeaderIcon": "",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "music player",
+      "include": ""
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "url": ""
+      }
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 410,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 130,
+          "y": 150,
+          "type": "file"
+        }
+      ]
+    },
+    "mac": {
+      "icon": ""
+    },
+    "win": {
+      "icon": "",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "linux": {
+      "icon": ""
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zkh110119/music_player.git"
+  },
+  "author": "z",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zkh110119/music_player/issues"
+  },
+  "homepage": "https://github.com/zkh110119/music_player#readme"
+}
