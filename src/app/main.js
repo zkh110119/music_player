@@ -8,6 +8,7 @@ let createWindow = () => {
         height: 640,
         minHeight: 640,
         minWidth: 960,
+        //frame: false,
         webPreferences: {
             nodeIntegration: true
         }
