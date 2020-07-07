@@ -2,7 +2,7 @@
   "name": "music_player",
   "version": "1.0.0",
   "description": "a simple music player!",
-  "main": "main.js",
+  "main": "./src/app/main.js",
   "scripts": {
     "dev": "electron .",
     "pack": "electron-builder --win --x64",
