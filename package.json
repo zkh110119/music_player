@@ -80,5 +80,9 @@
   "bugs": {
     "url": "https://github.com/zkh110119/music_player/issues"
   },
-  "homepage": "https://github.com/zkh110119/music_player#readme"
+  "homepage": "https://github.com/zkh110119/music_player#readme",
+  "devDependencies": {
+    "electron": "^9.0.0",
+    "electron-builder": "^22.7.0"
+  }
 }
