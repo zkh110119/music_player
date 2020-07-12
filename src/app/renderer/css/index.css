@@ -1,0 +1,132 @@
+body {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    background-color: #171718;
+    font-family: "Microsoft YaHei";
+}
+
+.left-panel {
+    width: 210px;
+    height: 100%;
+    margin-bottom: 0;
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+}
+
+.right-panel {
+    height: 100%;
+    margin-bottom: 0;
+    background-color: rgba(255, 255, 255, 0.01);
+    border: 0;
+    border-radius: 0;
+    color: #D1D1D1;
+    margin-left: 210px;
+}
+
+.left-panel .music-icon {
+    width: 100%;
+}
+
+.left-panel .music-icon .music-icon-text {
+    height: 44px;
+    line-height: 41px;
+    width: 100%;
+    margin: 10px 0 28px 0;
+    padding-left: 12px;
+    font-size: 16px;
+    font-weight: bolder;
+    cursor: default;
+}
+
+.left-panel .music-icon .music-icon-text i {
+    margin-right: 6px;
+    vertical-align: middle;
+    font-size: 42px;
+}
+
+.left-panel .panel-body {
+    padding: 0px 26px;
+}
+
+.right-panel .panel-body {
+    padding: 0px;
+}
+
+.left-panel .list-group .list-group-item {
+    background-color: transparent;
+    border: 0;
+    border-radius: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: #D1D1D1;
+    margin-bottom: 10px;
+}
+
+.left-panel .list-group .list-group-item i.fa {
+    padding-right: 6px;
+}
+
+.left-panel .list-group .list-group-item.default {
+    color: #8A8A8B;
+    cursor: default;
+}
+
+.left-panel .list-group .list-group-item.active {
+    color: #D2F6EE;
+    background-image: linear-gradient(to right, #1FD4AF, #1ECC94);
+}
+
+.left-panel .list-group .list-group-item:not(.default):not(.active):hover {
+    color: #D2F6EE;
+    background-image: linear-gradient(to right, #2E2E2F, #2E2E2F);
+}
+
+.right-panel .toolbar-panel {
+    height: 80px;
+    line-height: 42px;
+    padding: 18px 0;
+    margin: -80px 0 0;
+}
+
+.right-panel .toolbar-panel span {
+    color: #8E8E8F;
+    margin: 0 4px;
+    cursor: pointer;
+}
+
+.right-panel .toolbar-panel span:hover {
+    color: #1FD4AF;
+}
+
+.right-panel .music-body {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+.right-panel .music-play-toolbar {
+    margin: 0;
+    height: 70px;
+    width: 100%;
+}
+
+.right-panel .music-play-toolbar .row .progress {
+    height: 2px;
+    margin-bottom: 0;
+    margin-top: 1px;
+    background-image: linear-gradient(to right, #2E2E2F, #2E2E2F);
+}
+
+.right-panel .music-play-toolbar .row .progress .progress-bar-success {
+    background-image: linear-gradient(to right, #1FD4AF, #1ECC94);
+}
+
+a:focus,a:hover{
+    text-decoration: none;
+}

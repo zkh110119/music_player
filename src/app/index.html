@@ -4,12 +4,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';"/>
     <title>Music Player</title>
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="../../node_modules/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="renderer/css/iconfont/iconfont.css"/>
+    <link rel="stylesheet" href="renderer/css/index.css">
 </head>
 
-<body>
-
-    <script src="renderer/js/index.js"></script>
+<body class="container-fluid" style="padding: 0;">
+<div class="panel panel-default left-panel pull-left">
+    <div class="panel-body">
+        <div class="music-icon">
+            <div class="music-icon-text text-warning">
+                <i class="iconfont">&#xe61a;</i>QF音乐
+            </div>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item default">在线音乐</li>
+            <a href="#" class="list-group-item">
+                <i class="fa fa-music fa-lg fa-fw"></i>音乐馆
+            </a>
+            <a href="#" class="list-group-item">
+                <i class="fa fa-video-camera fa-lg fa-fw"></i>视频
+            </a>
+            <a href="#" class="list-group-item">
+                <i class="fa fa-podcast fa-lg fa-fw"></i>电台
+            </a>
+        </ul>
+        <ul class="list-group">
+            <li class="list-group-item default">我的音乐</li>
+            <a href="#" class="list-group-item active">
+                <i class="fa fa-heartbeat fa-lg fa-fw"></i>我喜欢
+            </a>
+            <a href="#" class="list-group-item">
+                <i class="fa fa-desktop fa-lg fa-fw"></i>本地和下载
+            </a>
+            <a href="#" class="list-group-item">
+                <i class="fa fa-clock-o fa-lg fa-fw"></i>播放历史
+            </a>
+            <a href="#" class="list-group-item">
+                <i class="fa fa-list fa-lg fa-fw"></i>试听列表
+            </a>
+        </ul>
+    </div>
+</div>
+<div class="panel panel-default right-panel">
+    <div class="panel-body" style="box-sizing: border-box;height: 100%;padding: 80px 0 70px 0;">
+        <div class="row toolbar-panel">
+            <div class="col-xs-9"></div>
+            <div class="col-xs-3 text-right">
+                <span href="#" id="app_bars">
+                    <i class="iconfont">&#xe62f;</i>
+                </span>
+                <i class="iconfont">&#xe63a;</i>
+                <span id="window_minimize">
+                    <i class="iconfont">&#xe70d;</i>
+                </span>
+                <span id="window_maximize">
+                    <i class="iconfont">&#xe65d;</i>
+                </span>
+                <span class="hidden" id="window_restore">
+                    <i class="iconfont">&#xe7c0;</i>
+                </span>
+                <span style="margin-right: 20px;" id="window_closed">
+                    <i class="iconfont">&#xe637;</i>
+                </span>
+            </div>
+        </div>
+        <div class="music-body">
+        </div>
+        <div class="row music-play-toolbar">
+            <div class="row" style="padding: 0;margin: 0;height: 16px;">
+                <div class="progress" id="play-progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+                         aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+                        <span class="sr-only">4% Complete (success)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row hidden" style="padding: 0;margin: 0;">
+                <audio id="music_player" class="hidden" src="./Cache/神仙卷奇缘.mp3" controls="controls"></audio>
+            </div>
+            <div class="row" style="padding: 0;margin: 0;">
+                <a href="#" id="player" style="color:#1FD4AF;"><i class="iconfont" style="font-size: 32px;">&#xe617;</i></a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    require('./renderer/js/index');
+</script>
 </body>
 
 </html>

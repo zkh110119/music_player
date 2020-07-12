@@ -1,10 +1,12 @@
 {
   "name": "music_player",
+  "productName": "music player",
   "version": "1.0.0",
   "description": "a simple music player!",
   "main": "./src/app/main.js",
   "scripts": {
-    "dev": "electron .",
+    "start": "electron .",
+    "dev": "electron . --debug",
     "pack": "electron-builder --win --x64",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,7 +17,8 @@
     "files": [
       "./src/**/*",
       "./package.json",
-      "./package-lock.json"
+      "./package-lock.json",
+      "!./build/**/*"
     ],
     "directories": {
       "output": "build"
@@ -75,15 +78,22 @@
     "type": "git",
     "url": "git+https://github.com/zkh110119/music_player.git"
   },
-  "author": "z",
+  "author": "Z",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/zkh110119/music_player/issues"
   },
   "homepage": "https://github.com/zkh110119/music_player#readme",
   "devDependencies": {
+    "devtron": "^1.4.0",
     "electron": "^9.0.0",
-    "electron-builder": "^22.7.0"
+    "electron-builder": "^22.7.0",
+    "electron-devtools-installer": "^3.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "bootstrap": "^3.4.1",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.5.1",
+    "popper.js": "^1.16.1"
+  }
 }
