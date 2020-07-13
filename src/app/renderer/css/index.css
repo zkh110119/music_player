@@ -127,6 +127,25 @@ body {
     background-image: linear-gradient(to right, #1FD4AF, #1ECC94);
 }
 
-a:focus,a:hover{
+a:focus, a:hover {
     text-decoration: none;
+}
+
+.music-play-toolbar #control_panel a {
+    display: inline-block;
+    width: 42px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 20px;
+    vertical-align: top;
+    color: #D1D1D1;
+}
+
+.music-play-toolbar #control_panel a:hover {
+    color: #1FD4AF;
+}
+
+.music-play-toolbar #control_panel a i.glyphicon {
+    margin-top: 8px;
 }

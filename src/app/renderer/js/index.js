@@ -3,7 +3,7 @@ window.$ = require('jquery'),
     window.Popper = require('popper.js');
 require('bootstrap');
 const {minimizeWindow, maximizeWindow, restoreWindow, closeWindow} = require('./base.js');
-let timer = null;
+let player = null;
 
 let bindButtonEventListener = () => {
     $('#window_minimize').on('click', () => {
@@ -22,13 +22,21 @@ let bindButtonEventListener = () => {
     $('#window_closed').on('click', () => {
         closeWindow();
     });
-    $('#player').on('click', () => {
-        playMusic();
-    });
 };
 
 let initialize = () => {
     bindButtonEventListener();
+    player = document.getElementById('music_player');
+    $('#player').on('click', () => {
+        if ($('#player').data('type') == 1) {
+            playMusic();
+        } else {
+            pauseMusic();
+        }
+    });
+    player.ontimeupdate = () => {
+        updateProgressBar();
+    };
 };
 
 $(function () {
@@ -36,6 +44,22 @@ $(function () {
 });
 
 function playMusic() {
-    let player = document.getElementById('music_player');
-    console.log(player.duration);
+    player.play();
+    $('#player').data('type', 0).children('i').html('&#xe7a9;');
+
+}
+
+
+function pauseMusic() {
+    player.pause();
+    $('#player').data('type', 1).children('i').html('&#xe617;');
+}
+
+
+function updateProgressBar() {
+    let duration = player.duration,
+        currentTime = player.currentTime;
+    console.log(duration, currentTime);
+    let progress = Math.floor(currentTime / duration * 1000);
+    $('#play-progress').children('.progress-bar.progress-bar-success').css('width', progress/10 + '%').attr('aria-valuenow', progress);
 }
