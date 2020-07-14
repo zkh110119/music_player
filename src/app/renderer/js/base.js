@@ -9,7 +9,7 @@ let maximizeWindow = () => {
 };
 
 let restoreWindow = () => {
-    return ipcRenderer.send('restore-app-window-main');
+    ipcRenderer.send('restore-app-window-main');
 };
 
 let minimizeWindow = () => {

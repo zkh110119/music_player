@@ -27,6 +27,7 @@ function initialize() {
 
         if (debug) {
             mainWindow.webContents.openDevTools();
+            require('devtron').install();
         }
 
         mainWindow.on('closed', () => {
@@ -68,6 +69,7 @@ function makeSingleInstance() {
 
 function loadFunction() {
     require('./main/mainIpc.js');
+    require('./main/controller/IndexController.js')
 }
 
 initialize();

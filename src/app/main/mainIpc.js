@@ -9,7 +9,7 @@ ipcMain.on('maximize-app-window-main', () => {
     currWindow.maximize();
 });
 
-ipcMain.on('restore-app-window-main', (event,arg) => {
+ipcMain.on('restore-app-window-main', () => {
     let currWindow = BrowserWindow.getFocusedWindow();
     if (currWindow.isMaximized()) {
         currWindow.unmaximize();
