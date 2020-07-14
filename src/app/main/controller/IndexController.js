@@ -7,7 +7,7 @@ ipcMain.on('getPlayMenus', (event, args) => {
     db = new DB();
     let sql, rs = null;
     if (args && args.id) {
-        sql = `SELECT * FROM music_local where id =${args.id}`;
+        sql = `SELECT * FROM music_local where id ='${args.id}'`;
     } else {
         sql = `SELECT * FROM music_local where 1=1`
     }
