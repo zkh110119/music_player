@@ -22,7 +22,7 @@ ipcMain.on('getCurrentIdPreAndNext', (event, args) => {
     db = new DB();
     let rs = null;
     if (args && args.id) {
-        let sql = `SELECT * FROM music_menus WHERE id = ${args.id}`;
+        let sql = `SELECT * FROM music_menus WHERE id = '${args.id}'`;
         db.queryData(sql, (rows) => {
             rs = new RS(1, '', rows);
             db.close();
@@ -38,7 +38,7 @@ ipcMain.on('getPreIdById', (event, args) => {
     db = new DB();
     let rs = null;
     if (args && args.id) {
-        let sql = `SELECT music_local.id,music_local.name,music_local.src  FROM music_local left join music_menus on music_local.id = music_menus.pre where music_menus.id = ${args.id}`;
+        let sql = `SELECT music_local.id,music_local.name,music_local.src  FROM music_local left join music_menus on music_local.id = music_menus.pre where music_menus.id = '${args.id}'`;
         db.queryData(sql, (rows) => {
             rs = new RS(1, '', rows);
             db.close();
@@ -55,7 +55,7 @@ ipcMain.on('getNextIdById', (event, args) => {
     db = new DB();
     let rs = null;
     if (args && args.id) {
-        let sql = `SELECT music_local.id,music_local.name,music_local.src  FROM music_local left join music_menus on music_local.id = music_menus.next where music_menus.id = ${args.id}`;
+        let sql = `SELECT music_local.id,music_local.name,music_local.src  FROM music_local left join music_menus on music_local.id = music_menus.next where music_menus.id = '${args.id}'`;
         db.queryData(sql, (rows) => {
             rs = new RS(1, '', rows);
             db.close();

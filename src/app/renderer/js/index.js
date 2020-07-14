@@ -23,7 +23,7 @@ let bindButtonEventListener = () => {
         restoreWindow();
     });
     $('#window_closed').on('click', () => {
-        if($(audio).data('id') && audio.currentTime) {
+        if ($(audio).data('id') && audio.currentTime) {
             localStorage.setItem('iLike', JSON.stringify({id: $(audio).data('id'), currTime: audio.currentTime}));
         }
         closeWindow();
