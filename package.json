@@ -15,13 +15,15 @@
     "appId": "com.z.mp",
     "copyright": "@author z",
     "files": [
-      "./src/**/*",
-      "./package.json",
-      "./package-lock.json",
-      "!./build/**/*"
+      "**/src/**/*"
+    ],
+    "extraFiles": [
+      "**/db/**/*",
+      "**/Cache/**/*"
     ],
     "directories": {
-      "output": "build"
+      "app": "./",
+      "output": "./build/"
     },
     "nsis": {
       "oneClick": false,
@@ -85,6 +87,7 @@
   },
   "homepage": "https://github.com/zkh110119/music_player#readme",
   "devDependencies": {
+    "asar": "^3.0.3",
     "devtron": "^1.4.0",
     "electron": "^9.1.0",
     "electron-builder": "^22.7.0",

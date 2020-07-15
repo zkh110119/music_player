@@ -1,7 +1,7 @@
 const fs = require('fs');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
-const file = path.join(__dirname, './../db/music_player_db.db');
+const file = path.resolve('./db/music_player_db.db');
 
 class SqliteDB {
     constructor() {
@@ -15,7 +15,7 @@ class SqliteDB {
     }
 
     printErrorInfo(err) {
-        console.log("Error Message:" + err.message + " ErrorNumber:" + err.no)
+        console.log("Error Message:" + err.message + " ErrorNumber:" + err.no);
     }
 
     createTable(sql) {

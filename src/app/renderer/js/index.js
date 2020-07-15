@@ -6,7 +6,7 @@ const {ipcRenderer} = require('electron');
 const {minimizeWindow, maximizeWindow, restoreWindow, closeWindow} = require('./base.js');
 const path = require('path');
 let audio = null;
-const baseUrl = path.join(__dirname, './../../../app/');
+const baseUrl = path.resolve( './Cache');
 
 let bindButtonEventListener = () => {
     $('#window_minimize').on('click', () => {
