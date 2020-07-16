@@ -1,2 +1,2 @@
 # music_player
-a simple music player
+a simple music player.

@@ -6,8 +6,9 @@ const {ipcRenderer} = require('electron');
 const {minimizeWindow, maximizeWindow, restoreWindow, closeWindow} = require('./base.js');
 const path = require('path');
 let audio = null;
-const baseUrl = path.resolve( './Cache');
-
+const baseUrl = path.resolve('./Cache');
+/*const {v4} = require('uuid');
+console.log(v4());*/
 let bindButtonEventListener = () => {
     $('#window_minimize').on('click', () => {
         minimizeWindow();
@@ -64,11 +65,14 @@ let initialize = () => {
     audio.ontimeupdate = () => {
         updateProgressBar();
     };
+    audio.onended = () => {
+        endToPlayNext();
+    };
     updateProgressBar();
     bindButtonEventListener();
     $('#player').on('click', () => {
         if ($('#player').data('type') == 1) {
-            playMusic();
+            startPlay();
         } else {
             pauseMusic();
         }
@@ -86,11 +90,22 @@ $(function () {
 });
 
 function playMusic() {
-    if (audio.readyState == 4) {
+    audio.onloadstart = () => {
+        console.log('开始加载歌曲！')
+    };
+    audio.onprogress = () => {
+        console.log('歌曲加载中...')
+    };
+    audio.oncanplay = () => {
         audio.play();
         $('#player').data('type', 0).children('i').html('&#xe7a9;');
     }
 
+}
+
+function startPlay() {
+    audio.play();
+    $('#player').data('type', 0).children('i').html('&#xe7a9;');
 }
 
 function pauseMusic() {
@@ -125,8 +140,7 @@ function playMusicEvent(data) {
             audio.currentTime = 0;
             audio.load();
             $(audio).data('id', data.rows[0].id);
-            audio.play();
-            $('#player').data('type', 0).children('i').html('&#xe7a9;');
+            playMusic();
         } else {
             console.log('未找到该歌曲！');
         }
