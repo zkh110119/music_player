@@ -17,6 +17,8 @@ function initialize() {
             minHeight: 690,
             title: app.getName(),
             frame: false,
+            backgroundColor: '#171718',
+            movable: true,
             webPreferences: {
                 nodeIntegration: true
             }
