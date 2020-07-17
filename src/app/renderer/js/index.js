@@ -128,10 +128,18 @@ function setVioceSize() {
 function enterMusicPanel(data, currTime) {
     if (data.code == 200) {
         if (data.rows.length > 0) {
-            audio.src = path.join(baseUrl, data.rows[0].src);
+            if (/http/.test(data.rows[0].src)) {
+                audio.src = path.join(data.rows[0].src);
+            } else {
+                audio.src = path.join(baseUrl, data.rows[0].src);
+            }
             audio.currentTime = currTime;
             if (data.rows[0].img_src) {
-                $('#show_image').attr('src', path.join(baseUrl, data.rows[0].img_src));
+                if (/http/.test(data.rows[0].img_src)) {
+                    $('#show_image').attr('src', data.rows[0].img_src);
+                } else {
+                    $('#show_image').attr('src', path.join(baseUrl, data.rows[0].img_src));
+                }
             }
             if (data.rows[0].name) {
                 $('#music_name').text(data.rows[0].name);
@@ -159,10 +167,18 @@ function enterMusicPanel(data, currTime) {
 function playMusicEvent(data) {
     if (data.code == 200) {
         if (data.rows.length > 0) {
-            audio.src = path.join(baseUrl, data.rows[0].src);
+            if (/http/.test(data.rows[0].src)) {
+                audio.src = path.join(data.rows[0].src);
+            } else {
+                audio.src = path.join(baseUrl, data.rows[0].src);
+            }
             audio.currentTime = 0;
             if (data.rows[0].img_src) {
-                $('#show_image').attr('src', path.join(baseUrl, data.rows[0].img_src));
+                if (/http/.test(data.rows[0].img_src)) {
+                    $('#show_image').attr('src', data.rows[0].img_src);
+                } else {
+                    $('#show_image').attr('src', path.join(baseUrl, data.rows[0].img_src));
+                }
             }
             if (data.rows[0].name) {
                 $('#music_name').text(data.rows[0].name);
