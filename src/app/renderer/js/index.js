@@ -37,30 +37,10 @@ let initialize = () => {
     let lastPlayMusic = JSON.parse(localStorage.getItem('iLike'));
     if (lastPlayMusic) {
         let data = ipcRenderer.sendSync('getPlayMenus', {id: lastPlayMusic.id});
-        if (data.code == 200) {
-            if (data.rows.length > 0) {
-                audio.src = path.join(baseUrl, data.rows[0].src);
-                audio.currentTime = lastPlayMusic.currTime;
-                $(audio).data('id', lastPlayMusic.id);
-            } else {
-                console.log('未找到该歌曲！');
-            }
-        } else {
-            console.error(data.message);
-        }
+        enterMusicPanel(data, lastPlayMusic.currTime);
     } else {
         let data = ipcRenderer.sendSync('getPlayMenus');
-        if (data.code == 200) {
-            if (data.rows.length > 0) {
-                audio.src = path.join(baseUrl, data.rows[0].src);
-                audio.currentTime = 0;
-                $(audio).data('id', data.rows[0].id);
-            } else {
-                console.log('未找到该歌曲！');
-            }
-        } else {
-            console.log(data.message);
-        }
+        enterMusicPanel(data, 0);
     }
     audio.ontimeupdate = () => {
         updateProgressBar();
@@ -70,6 +50,20 @@ let initialize = () => {
     };
     updateProgressBar();
     bindButtonEventListener();
+    $('#loop').on('click', (e) => {
+        if (audio && audio.loop != undefined) {
+            if (audio.loop == '') {
+                audio.loop = 'loop';
+                $(e.target).html('&#xe66d;');
+            } else {
+                audio.loop = '';
+                $(e.target).html('&#xe66c;');
+            }
+        } else {
+            audio.loop = '';
+            $(e.target).html('&#xe66c;');
+        }
+    });
     $('#player').on('click', () => {
         if ($('#player').data('type') == 1) {
             startPlay();
@@ -113,12 +107,9 @@ function pauseMusic() {
     $('#player').data('type', 1).children('i').html('&#xe617;');
 }
 
-
-function updateProgressBar() {
-    let duration = audio.duration,
-        currentTime = audio.currentTime;
-    let progress = Math.floor(currentTime / duration * 1000);
-    $('#play-progress').children('.progress-bar.progress-bar-success').css('width', progress / 10 + '%').attr('aria-valuenow', progress);
+function preMusic() {
+    let data = ipcRenderer.sendSync('getPreIdById', {id: $(audio).data('id')});
+    playMusicEvent(data);
 }
 
 function nextMusic() {
@@ -126,18 +117,63 @@ function nextMusic() {
     playMusicEvent(data);
 }
 
-
-function preMusic() {
-    let data = ipcRenderer.sendSync('getPreIdById', {id: $(audio).data('id')});
-    playMusicEvent(data);
+function endToPlayNext() {
+    nextMusic();
 }
 
+function setVioceSize() {
 
+}
+
+function enterMusicPanel(data, currTime) {
+    if (data.code == 200) {
+        if (data.rows.length > 0) {
+            audio.src = path.join(baseUrl, data.rows[0].src);
+            audio.currentTime = currTime;
+            if (data.rows[0].img_src) {
+                $('#show_image').attr('src', path.join(baseUrl, data.rows[0].img_src));
+            }
+            if (data.rows[0].name) {
+                $('#music_name').text(data.rows[0].name);
+            } else {
+                $('#music_name').text('未知');
+            }
+            if (data.rows[0].author) {
+                $('#author_name').text(' - ' + data.rows[0].author);
+            } else {
+                $('#author_name').text(' - 未知');
+            }
+            $(audio).data('id', data.rows[0].id);
+        } else {
+            console.log('未找到该歌曲！');
+        }
+    } else {
+        console.log(data.message);
+    }
+}
+
+/**
+ * 播放事件
+ * @param {Object} data
+ */
 function playMusicEvent(data) {
     if (data.code == 200) {
         if (data.rows.length > 0) {
             audio.src = path.join(baseUrl, data.rows[0].src);
             audio.currentTime = 0;
+            if (data.rows[0].img_src) {
+                $('#show_image').attr('src', path.join(baseUrl, data.rows[0].img_src));
+            }
+            if (data.rows[0].name) {
+                $('#music_name').text(data.rows[0].name);
+            } else {
+                $('#music_name').text('未知');
+            }
+            if (data.rows[0].author) {
+                $('#author_name').text(' - ' + data.rows[0].author);
+            } else {
+                $('#author_name').text(' - 未知');
+            }
             audio.load();
             $(audio).data('id', data.rows[0].id);
             playMusic();
@@ -147,4 +183,28 @@ function playMusicEvent(data) {
     } else {
         console.log(data.message);
     }
+}
+
+/**
+ * 更新进度条和显示的时间
+ */
+function updateProgressBar() {
+    let duration = Math.ceil(audio.duration),
+        currentTime = Math.ceil(audio.currentTime);
+    let progress = Math.ceil(currentTime / duration * 100);
+    $('#play-progress').children('.progress-bar.progress-bar-success').css('width', progress + '%').attr('aria-valuenow', progress);
+    $('#show_time').html(secondToStandardTime(currentTime) + ' / ' + secondToStandardTime(duration));
+}
+
+/**
+ * 将秒数转换为时分秒的格式
+ *
+ * @param {string} time
+ * @returns {string}
+ */
+function secondToStandardTime(time) {
+    let hour = Math.floor(time / 3600);
+    let minute = Math.floor((time - hour * 3600) / 60);
+    let second = (time - hour * 3600) % 60;
+    return `${hour == 0 ? '' : hour < 10 ? '0' + hour + ':' : hour + ':'}${minute < 10 ? '0' + minute : minute}:${second < 10 ? '0' + second : second}`;
 }
