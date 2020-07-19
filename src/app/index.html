@@ -8,6 +8,7 @@
     <title>Music Player</title>
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="../../node_modules/bootstrap-table/dist/bootstrap-table.min.css">
     <link rel="stylesheet" href="../../node_modules/font-awesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="renderer/css/iconfont/iconfont.css"/>
     <link rel="stylesheet" href="renderer/css/iconfont1/iconfont.css"/>
@@ -75,6 +76,7 @@
             </div>
         </div>
         <div class="music-body">
+            <table id="table"></table>
         </div>
         <div class="row music-play-toolbar">
             <div class="row" style="padding: 0;margin: 0;height: 16px;">
@@ -99,8 +101,9 @@
                                     <span id="author_name" class="text-muted"></span>
                                 </div>
                                 <div class="music-img-tool">
-                                    <a href="#" class="ilike"><i class="glyphicon glyphicon-heart" style="font-size: 18px;"></i></a>
-                                    <a href="#"><i class="iconfont">&#xe678;</i></a>
+                                    <a href="#" class="ilike"><i class="glyphicon glyphicon-heart"
+                                                                 style="font-size: 18px;"></i></a>
+                                    <a href="#" id="downloadMusic"><i class="iconfont">&#xe678;</i></a>
                                     <a href="#"><i class="iconfont">&#xe785;</i></a>
                                 </div>
                             </div>

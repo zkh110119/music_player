@@ -96,9 +96,11 @@
   },
   "dependencies": {
     "bootstrap": "^3.4.1",
+    "bootstrap-table": "^1.17.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
+    "request": "^2.88.2",
     "sqlite3": "^5.0.0",
     "uuid": "^8.2.0"
   }

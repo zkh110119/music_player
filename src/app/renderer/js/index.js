@@ -2,11 +2,14 @@ window.$ = require('jquery'),
     window.jQuery = require('jquery'),
     window.Popper = require('popper.js');
 require('bootstrap');
+require('bootstrap-table');
 const {ipcRenderer} = require('electron');
+const {dialog} = require('electron').remote;
+
 const {minimizeWindow, maximizeWindow, restoreWindow, closeWindow} = require('./base.js');
 const path = require('path');
 let audio = null;
-const baseUrl = path.resolve('./Cache');
+const baseUrl = path.resolve('./cache');
 /*const {v4} = require('uuid');
 console.log(v4());*/
 let bindButtonEventListener = () => {
@@ -50,6 +53,9 @@ let initialize = () => {
     };
     updateProgressBar();
     bindButtonEventListener();
+    $('#downloadMusic').on('click', () => {
+        downloadMusic();
+    });
     $('#loop').on('click', (e) => {
         if (audio && audio.loop != undefined) {
             if (audio.loop == '') {
@@ -81,6 +87,7 @@ let initialize = () => {
 
 $(function () {
     initialize();
+    initPlayMenus();
 });
 
 function playMusic() {
@@ -115,6 +122,15 @@ function preMusic() {
 function nextMusic() {
     let data = ipcRenderer.sendSync('getNextIdById', {id: $(audio).data('id')});
     playMusicEvent(data);
+}
+
+function downloadMusic() {
+    let data = ipcRenderer.sendSync('downloadMusic', {id: $('#downloadMusic').data('curr')});
+    dialog.showMessageBox({
+        type: 'info',
+        title: '提示信息',
+        message: data.message
+    });
 }
 
 function endToPlayNext() {
@@ -152,6 +168,7 @@ function enterMusicPanel(data, currTime) {
                 $('#author_name').text(' - 未知');
             }
             $(audio).data('id', data.rows[0].id);
+            $('#downloadMusic').data('curr', data.rows[0].id);
         } else {
             console.log('未找到该歌曲！');
         }
@@ -192,6 +209,7 @@ function playMusicEvent(data) {
             }
             audio.load();
             $(audio).data('id', data.rows[0].id);
+            $('#downloadMusic').data('curr', data.rows[0].id);
             playMusic();
         } else {
             console.log('未找到该歌曲！');
@@ -223,4 +241,113 @@ function secondToStandardTime(time) {
     let minute = Math.floor((time - hour * 3600) / 60);
     let second = (time - hour * 3600) % 60;
     return `${hour == 0 ? '' : hour < 10 ? '0' + hour + ':' : hour + ':'}${minute < 10 ? '0' + minute : minute}:${second < 10 ? '0' + second : second}`;
+}
+
+
+function initPlayMenus() {
+    $('#table').bootstrapTable({
+        data: [{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        },{
+            id: '1',
+            name: '1',
+            price: '1'
+        }],
+        columns: [{
+            field: 'id',
+            title: 'Item ID'
+        }, {
+            field: 'name',
+            title: 'Item Name'
+        }, {
+            field: 'price',
+            title: 'Item Price'
+        }]
+    });
 }
