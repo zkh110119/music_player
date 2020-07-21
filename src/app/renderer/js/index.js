@@ -8,6 +8,7 @@ const {dialog} = require('electron').remote;
 
 const {minimizeWindow, maximizeWindow, restoreWindow, closeWindow} = require('./base.js');
 const path = require('path');
+const fs = require('fs');
 let audio = null;
 const baseUrl = path.resolve('./cache');
 /*const {v4} = require('uuid');
@@ -32,6 +33,13 @@ let bindButtonEventListener = () => {
         }
         closeWindow();
     });
+    ipcRenderer.on('renderer-download-finish', (event, data) => {
+        dialog.showMessageBox({
+            type: 'info',
+            title: '提示信息',
+            message: data.message
+        });
+    });
 };
 
 let initialize = () => {
@@ -54,7 +62,7 @@ let initialize = () => {
     updateProgressBar();
     bindButtonEventListener();
     $('#downloadMusic').on('click', () => {
-        downloadMusic();
+        downloadMusic(true);
     });
     $('#loop').on('click', (e) => {
         if (audio && audio.loop != undefined) {
@@ -88,6 +96,11 @@ let initialize = () => {
 $(function () {
     initialize();
     initPlayMenus();
+    $(window).on('resize', () => {
+        $('#table').bootstrapTable('resetView', {
+            height: $('.music-body').height()
+        });
+    });
 });
 
 function playMusic() {
@@ -124,13 +137,8 @@ function nextMusic() {
     playMusicEvent(data);
 }
 
-function downloadMusic() {
-    let data = ipcRenderer.sendSync('downloadMusic', {id: $('#downloadMusic').data('curr')});
-    dialog.showMessageBox({
-        type: 'info',
-        title: '提示信息',
-        message: data.message
-    });
+function downloadMusic(b) {
+    ipcRenderer.send('downloadMusic', {id: $('#downloadMusic').data('curr'), rtn: b ? true : false});
 }
 
 function endToPlayNext() {
@@ -144,17 +152,29 @@ function setVioceSize() {
 function enterMusicPanel(data, currTime) {
     if (data.code == 200) {
         if (data.rows.length > 0) {
+            $('#downloadMusic').data('curr', data.rows[0].id);
             if (/http/.test(data.rows[0].src)) {
-                audio.src = path.join(data.rows[0].src);
+                audio.src = data.rows[0].src;
             } else {
-                audio.src = path.join(baseUrl, data.rows[0].src);
+                let srcStr = path.join('file://', baseUrl, data.rows[0].src);
+                if (fs.existsSync(srcStr)) {
+                    audio.src = srcStr;
+                } else {
+                    downloadMusic();
+                    audio.src = data.rows[0].online_src;
+                }
             }
             audio.currentTime = currTime;
             if (data.rows[0].img_src) {
                 if (/http/.test(data.rows[0].img_src)) {
                     $('#show_image').attr('src', data.rows[0].img_src);
                 } else {
-                    $('#show_image').attr('src', path.join(baseUrl, data.rows[0].img_src));
+                    let imgStr = path.join('file://', baseUrl, data.rows[0].img_src);
+                    if (fs.existsSync(imgStr)) {
+                        $('#show_image').attr('src', imgStr);
+                    } else {
+                        $('#show_image').attr('src', data.rows[0].online_img_src);
+                    }
                 }
             }
             if (data.rows[0].name) {
@@ -168,7 +188,6 @@ function enterMusicPanel(data, currTime) {
                 $('#author_name').text(' - 未知');
             }
             $(audio).data('id', data.rows[0].id);
-            $('#downloadMusic').data('curr', data.rows[0].id);
         } else {
             console.log('未找到该歌曲！');
         }
@@ -184,17 +203,29 @@ function enterMusicPanel(data, currTime) {
 function playMusicEvent(data) {
     if (data.code == 200) {
         if (data.rows.length > 0) {
+            $('#downloadMusic').data('curr', data.rows[0].id);
             if (/http/.test(data.rows[0].src)) {
-                audio.src = path.join(data.rows[0].src);
+                audio.src = data.rows[0].src;
             } else {
-                audio.src = path.join(baseUrl, data.rows[0].src);
+                let srcStr = path.join('file://', baseUrl, data.rows[0].src);
+                if (fs.existsSync(srcStr)) {
+                    audio.src = srcStr;
+                } else {
+                    downloadMusic();
+                    audio.src = data.rows[0].online_src;
+                }
             }
             audio.currentTime = 0;
             if (data.rows[0].img_src) {
                 if (/http/.test(data.rows[0].img_src)) {
                     $('#show_image').attr('src', data.rows[0].img_src);
                 } else {
-                    $('#show_image').attr('src', path.join(baseUrl, data.rows[0].img_src));
+                    let imgStr = path.join('file://', baseUrl, data.rows[0].img_src);
+                    if (fs.existsSync(imgStr)) {
+                        $('#show_image').attr('src', imgStr);
+                    } else {
+                        $('#show_image').attr('src', data.rows[0].online_img_src);
+                    }
                 }
             }
             if (data.rows[0].name) {
@@ -209,7 +240,6 @@ function playMusicEvent(data) {
             }
             audio.load();
             $(audio).data('id', data.rows[0].id);
-            $('#downloadMusic').data('curr', data.rows[0].id);
             playMusic();
         } else {
             console.log('未找到该歌曲！');
@@ -246,108 +276,32 @@ function secondToStandardTime(time) {
 
 function initPlayMenus() {
     $('#table').bootstrapTable({
-        data: [{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        },{
-            id: '1',
-            name: '1',
-            price: '1'
-        }],
+        height: $('.music-body').height(),
         columns: [{
-            field: 'id',
-            title: 'Item ID'
-        }, {
             field: 'name',
-            title: 'Item Name'
+            title: '歌曲',
+            formatter: (value, row) => {
+                return `<i class="glyphicon glyphicon-heart" style="font-size: 15px;color: #ff4d71;"></i>
+                        &nbsp;${value}
+                       `;
+            }
         }, {
-            field: 'price',
-            title: 'Item Price'
-        }]
+            field: 'author',
+            title: '歌手'
+        }, {
+            field: 'album',
+            title: '专辑'
+        }],
+        ajax: (params) => {
+            $.get('http://localhost:3000/getAllData').then((res) => {
+                console.log(res);
+                params.success(res.rows);
+            });
+        },
+        rowStyle: {
+            css: {
+                padding: "16px 8px"
+            }
+        }
     });
 }

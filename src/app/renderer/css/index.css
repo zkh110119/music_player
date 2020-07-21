@@ -8,6 +8,10 @@ body {
     padding: 0;
     background-color: #171718;
     font-family: regular;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .left-panel {
@@ -177,4 +181,42 @@ a:focus, a:hover {
 
 .text-muted {
     color: #9c9c9c;
+}
+
+.table-bordered {
+    border: 0;
+}
+
+.bootstrap-table .fixed-table-container.fixed-height:not(.has-footer) {
+    border-bottom: 0;
+}
+
+.bootstrap-table .fixed-table-container.fixed-height .table thead th {
+    border-bottom: 0;
+}
+
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    border-top: 0 !important;
+}
+
+.table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+    border: 0;
+}
+
+.bootstrap-table .fixed-table-container.fixed-height .fixed-table-border {
+    border: 0;
+}
+
+.table-hover > tbody > tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.bootstrap-table .fixed-table-container .table thead th .th-inner {
+    font-size: 12px;
+    color: #9c9c9c;
+}
+
+.table-bordered > tbody > tr > td {
+    font-size: 13px;
+    color: #D1D1D1;
 }
