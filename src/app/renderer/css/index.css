@@ -220,3 +220,19 @@ a:focus, a:hover {
     font-size: 13px;
     color: #D1D1D1;
 }
+
+
+.form-control {
+    background-color: rgba(0, 0, 0, 0);
+    border-color: #696969;
+    color: #D1D1D1;
+}
+
+.form-group span.glyphicon {
+    color: #696969;
+    cursor: pointer;
+}
+
+.form-group span.glyphicon:focus {
+    color: #1FD4AF;
+}

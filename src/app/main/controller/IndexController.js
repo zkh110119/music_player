@@ -22,6 +22,21 @@ ipcMain.on('getPlayMenus', (event, args) => {
     });
 });
 
+ipcMain.on('getPlayMenusByKeyword', (event, args) => {
+    db = new DB();
+    let sql, rs = null;
+    if (args && args.kw) {
+        sql = `SELECT * FROM "music_local" WHERE keyword LIKE '%${args.kw}%'`;
+    } else {
+        sql = `SELECT * FROM music_local where 1=1`
+    }
+    db.queryData(sql, (rows) => {
+        rs = new RS(1, '', rows);
+        db.close();
+        event.returnValue = rs;
+    });
+});
+
 ipcMain.on('getCurrentIdPreAndNext', (event, args) => {
     db = new DB();
     let rs = null;

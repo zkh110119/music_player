@@ -76,8 +76,18 @@
                 </span>
             </div>
         </div>
-        <div class="music-body" style="padding: 10px 40px;">
-            <table id="table"></table>
+        <div class="music-body" style="padding: 60px 40px;">
+            <div class="row" style="margin-top: -50px;">
+                <div class="col-xs-4">
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" id="search_music" aria-describedby="search_music_status"
+                               placeholder="搜索音乐" style="border-radius: 17px;"/>
+                        <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
+                        <span id="search_music_status" class="sr-only">(success)</span>
+                    </div>
+                </div>
+            </div>
+            <table id="table" s></table>
         </div>
         <div class="row music-play-toolbar">
             <div class="row" style="padding: 0;margin: 0;height: 16px;">

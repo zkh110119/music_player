@@ -33,6 +33,13 @@ let bindButtonEventListener = () => {
         }
         closeWindow();
     });
+    $('#search_music').on('keyup', (e) => {
+        if (e.keyCode == 13) {
+            let res = ipcRenderer.sendSync('getPlayMenusByKeyword', {kw: $.trim($('#search_music').val())});
+            $('#table').bootstrapTable('load', res.rows);
+
+        }
+    });
     ipcRenderer.on('renderer-download-finish', (event, data) => {
         dialog.showMessageBox({
             type: 'info',
@@ -143,10 +150,6 @@ function downloadMusic(b) {
 
 function endToPlayNext() {
     nextMusic();
-}
-
-function setVioceSize() {
-
 }
 
 function enterMusicPanel(data, currTime) {
@@ -293,10 +296,8 @@ function initPlayMenus() {
             title: '专辑'
         }],
         ajax: (params) => {
-            $.get('http://localhost:3000/getAllData').then((res) => {
-                console.log(res);
-                params.success(res.rows);
-            });
+            let res = ipcRenderer.sendSync('getPlayMenusByKeyword', {kw: $.trim($('#search_music').val())});
+            params.success(res.rows);
         },
         rowStyle: {
             css: {
